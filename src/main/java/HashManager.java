@@ -15,8 +15,7 @@ public interface HashManager {
     void prolongHash(String username, byte[] hash);
 
     /**
-     * Checks if user is logged in, by comparing the hash passed from user
-     * to hash stored here (server). If hashes don't match or
+     * Needs reconsideration. Will the communication layer provide only hash?
      * @param username
      * @param hash
      * @return

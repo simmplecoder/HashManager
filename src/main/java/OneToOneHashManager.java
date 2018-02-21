@@ -21,12 +21,8 @@ public class OneToOneHashManager implements HashManager {
         this.waitTimeMinutes = waitTimeMinutes;
     }
 
-
-    /**
-     * Cancels the timers, so server won't need to wait for shutdown
-     */
     public void shutdown() {
-        //doesn't matter to interrupt or not, as even in interrup GC will collect the maps
+        //doesn't matter to interrupt or not, as even in interrupt GC will collect the maps
         hashToTask.forEach((hash, future)->future.cancel(false));
     }
 
