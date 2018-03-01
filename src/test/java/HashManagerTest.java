@@ -14,32 +14,34 @@ public class HashManagerTest {
     @Test
     public void correctExpirationTest()
     {
+        byte[] darkhanIP = {(byte) 192, (byte) 168, 1, 1};
+        byte[] olzhasIP = {(byte) 192, (byte) 168, 1, 2};
+
         HashManager hashManager = new OneToOneHashManager(1);
-        byte[] darkhan = hashManager.generateHash("Darkhan");
-        byte[] olzhas = hashManager.generateHash("Olzhas");
+        byte[] darkhan = hashManager.generateHash("Darkhan", darkhanIP);
+        byte[] olzhas = hashManager.generateHash("Olzhas", olzhasIP);
         int expirationPeriodMillis = hashManager.expirationPeriodMinutes() * 60 * 1000;
 
         try {
             Thread.sleep(expirationPeriodMillis / 2);
 
             Assert.assertTrue("Darkhan's hash expired too early",
-                              hashManager.isLoggedIn("Darkhan", darkhan));
+                              hashManager.isLoggedIn("Darkhan", darkhanIP, darkhan));
             Assert.assertTrue("Olzhas's hash expired too early",
-                              hashManager.isLoggedIn("Olzhas", olzhas));
+                              hashManager.isLoggedIn("Olzhas", olzhasIP, olzhas));
 
-            hashManager.prolongHash("Darkhan", darkhan);
-            hashManager.prolongHash("Olzhas", olzhas);
+            hashManager.prolongHash("Darkhan", darkhanIP, darkhan);
+            hashManager.prolongHash("Olzhas", olzhasIP, olzhas);
 
             //some effort to avoid spurious wakeup
             Thread.sleep(expirationPeriodMillis + 100);
 
             Assert.assertFalse("Darkhan's hash didn't expire in time",
-                                hashManager.isLoggedIn("Darkhan", darkhan));
+                                hashManager.isLoggedIn("Darkhan", darkhanIP, darkhan));
             Assert.assertFalse("Olzhas's hash didn't expire in time",
-                                hashManager.isLoggedIn("Olzhas", olzhas));
+                                hashManager.isLoggedIn("Olzhas", olzhasIP, olzhas));
 
             hashManager.shutdown();
-
 
         } catch (InterruptedException e) {
             e.printStackTrace();

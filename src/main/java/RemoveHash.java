@@ -1,19 +1,19 @@
 import java.util.Map;
 
 public class RemoveHash implements Runnable {
-    private Map<String, byte[]> userToHash;
-    private Map<byte[], String> hashToUser;
-    private String username;
+    private Map<LoginInstance, byte[]> userToHash;
+    private Map<byte[], LoginInstance> hashToUser;
+    private LoginInstance instance;
 
-    public RemoveHash(Map<String, byte[]> userToHash, Map<byte[], String> hashToUser, String username) {
+    public RemoveHash(Map<LoginInstance, byte[]> userToHash, Map<byte[], LoginInstance> hashToUser, LoginInstance instance) {
         this.userToHash = userToHash;
         this.hashToUser = hashToUser;
-        this.username = username;
+        this.instance = instance;
     }
 
     @Override
     public void run() {
-        byte[] hash = userToHash.remove(username);
+        byte[] hash = userToHash.remove(instance);
         hashToUser.remove(hash);
     }
 }
