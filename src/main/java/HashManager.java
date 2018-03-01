@@ -1,5 +1,14 @@
 public interface HashManager {
     /**
+     *
+     */
+    enum LoginState {
+        NO_HASH,
+        CORRECT_HASH,
+        HASH_MISMATCH
+    }
+
+    /**
      * Generate a hash for newly logged in user
      * @param username a username for which to generate hash
      * @return generated hash for the user
@@ -20,7 +29,7 @@ public interface HashManager {
      * @param hash
      * @return
      */
-    boolean isLoggedIn(String username, byte[] ip, byte[] hash);
+    LoginState isLoggedIn(String username, byte[] ip, byte[] hash);
 
     /**
      * @return maximum amount of time the hash will be stored if user is inactive

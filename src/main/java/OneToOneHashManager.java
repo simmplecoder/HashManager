@@ -56,9 +56,15 @@ public class OneToOneHashManager implements HashManager {
                 timerKeeper.schedule(new RemoveHash(userToHash, hashToUser, new LoginInstance(username, ip)), 1, TimeUnit.MINUTES));
     }
 
-    public boolean isLoggedIn(String username, byte[] ip, byte[] hash) {
+    public LoginState isLoggedIn(String username, byte[] ip, byte[] hash) {
         byte[] storedHash = userToHash.get(new LoginInstance(username, ip));
-        return storedHash != null && Arrays.equals(storedHash, hash);
+        if (storedHash == null) {
+            return LoginState.NO_HASH;
+        }
+        if (!Arrays.equals(storedHash, hash)) {
+            return LoginState.HASH_MISMATCH;
+        }
+        return LoginState.CORRECT_HASH;
     }
 
     public int expirationPeriodMinutes()
