@@ -30,12 +30,12 @@ public class OneToOneHashManager implements HashManager {
         byte[] hash = new byte[256];
         random.nextBytes(hash);
 
-        LoginInstance instance = new LoginInstance(username, ip);
+        LoginInstance instance = new LoginInstance(username, ip.clone());
         userToHash.put(instance, hash);
         hashToUser.put(hash, instance);
         hashToTask.put(hash,
                 timerKeeper.schedule(new RemoveHash(userToHash, hashToUser, instance), 1, TimeUnit.MINUTES));
-        return hash;
+        return hash.clone();
     }
 
     public void prolongHash(String username, byte[] ip, byte[] hash)
