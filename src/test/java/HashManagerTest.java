@@ -25,9 +25,9 @@ public class HashManagerTest {
             Thread.sleep(expirationPeriodMillis / 2);
 
             Assert.assertTrue("Darkhan's hash expired too early",
-                              hashManager.isLoggedIn("Darkhan", darkhanIP, darkhan) == HashManager.LoginState.CORRECT_HASH);
+                    hashManager.isLoggedIn("Darkhan", darkhanIP, darkhan) == HashManager.LoginState.CORRECT_HASH);
             Assert.assertTrue("Olzhas's hash expired too early",
-                              hashManager.isLoggedIn("Olzhas", olzhasIP, olzhas) == HashManager.LoginState.CORRECT_HASH);
+                    hashManager.isLoggedIn("Olzhas", olzhasIP, olzhas) == HashManager.LoginState.CORRECT_HASH);
 
             hashManager.prolongHash("Darkhan", darkhanIP, darkhan);
             hashManager.prolongHash("Olzhas", olzhasIP, olzhas);
@@ -36,9 +36,9 @@ public class HashManagerTest {
             Thread.sleep(expirationPeriodMillis + 100);
 
             Assert.assertTrue("Darkhan's hash didn't expire in time",
-                                hashManager.isLoggedIn("Darkhan", darkhanIP, darkhan) == HashManager.LoginState.NO_HASH);
+                    hashManager.isLoggedIn("Darkhan", darkhanIP, darkhan) == HashManager.LoginState.NO_HASH);
             Assert.assertTrue("Olzhas's hash didn't expire in time",
-                                hashManager.isLoggedIn("Olzhas", olzhasIP, olzhas) == HashManager.LoginState.NO_HASH);
+                    hashManager.isLoggedIn("Olzhas", olzhasIP, olzhas) == HashManager.LoginState.NO_HASH);
 
             hashManager.shutdown();
 

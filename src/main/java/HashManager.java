@@ -19,17 +19,17 @@ public interface HashManager {
      * Prolong lifetime of a hash. Used if user shows any
      * signs of activity
      * @param username the username whose hash to prolog to
-     * @param hash the hash the user passed it, will be checked with stored
+     * @param primitiveHash the hash the user passed it, will be checked with stored
      */
-    void prolongHash(String username, byte[] ip, byte[] hash);
+    void prolongHash(String username, byte[] ip, byte[] primitiveHash);
 
     /**
      * Needs reconsideration. Will the communication layer provide only hash?
      * @param username
-     * @param hash
+     * @param primitiveHash
      * @return
      */
-    LoginState isLoggedIn(String username, byte[] ip, byte[] hash);
+    LoginState isLoggedIn(String username, byte[] ip, byte[] primitiveHash);
 
     /**
      * @return maximum amount of time the hash will be stored if user is inactive
